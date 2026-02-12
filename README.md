@@ -1,6 +1,6 @@
 # Backstage DevOps Portal
 
-![Backstage](https://backstage.io/assets/logo-light.svg)
+![Backstage](https://backstage.io/img/sharing-opengraph.png)
 
 A powerful developer portal built with [Backstage](https://backstage.io), providing a unified platform for managing microservices, catalogs, and DevOps workflows.
 
