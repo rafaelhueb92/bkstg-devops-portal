@@ -1,4 +1,16 @@
 ---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: joao.silva
+  description: Desenvolvedor Backend Senior
+spec:
+  profile:
+    display: Joao Silva
+    email: joao.silva@empresa.com
+    picture: https://avatars.githubusercontent.com/u/joao
+  memberOf: [grupo:default/team-cep]
+---
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-user
 apiVersion: backstage.io/v1alpha1
 kind: User
@@ -15,3 +27,19 @@ metadata:
 spec:
   type: team
   children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: team-cep
+  description: Time responsável pela API de CEP
+  tags:
+    - api
+    - backend
+spec:
+  type: team
+  profile:
+    displayName: Team CEP
+    email: team-cep@empresa.com
+  children: []
+  members: [joao.silva]

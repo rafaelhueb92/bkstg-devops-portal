@@ -28,8 +28,12 @@ backend:
   # This is for local development only, it is not recommended to use this in production
   # The production database configuration is stored in app-config.production.yaml
   database:
-    client: better-sqlite3
-    connection: ':memory:'
+    client: pg
+    connection:
+      host: ${POSTGRES_HOST}
+      port: ${POSTGRES_PORT}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
 
 integrations:
@@ -76,11 +80,19 @@ catalog:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
-    - allow: [Component, System, API, Resource, Location]
+    - allow: [Component, System, API, Resource, Locatio,Template]
   locations:
+
+    - type: url
+      target: https://github.com/backstage/software-templates/blob/main/scaffolder-templates/springboot-grpc-template/template.yaml
+      rules:
+        - allow: [Template]
+
     # Local example data, file locations are relative to the backend process, typically `packages/backend`
     - type: file
       target: ../../examples/entities.yaml
+    - type: file
+      target: ./catalog-info.yaml
 
     # Local example template
     - type: file
@@ -93,6 +105,20 @@ catalog:
       target: ../../examples/org.yaml
       rules:
         - allow: [User, Group]
+
+providers:
+  github:
+    myOrgDiscovery:
+      organization: rafaelhueb92
+      catalogPath: /catalog-info.yaml
+      filters:
+        branch: 'main'
+        repository: '.*'
+      schedule: 
+        frequency: { minutes: 30}
+        timeout: { minutes: 3 }
+
+  # see https://backstage.io/docs/features/github/configuration for GitHub configuration options
 
     ## Uncomment these lines to add more example data
     # - type: url
